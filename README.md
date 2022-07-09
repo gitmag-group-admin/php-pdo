@@ -154,3 +154,94 @@ If you provide an invalid database hostname, the following error message will di
 ```
 SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such ho
 ```
+
+### Connecting to the bookdb database from PHP
+
+create a new `connect.php` file that connects to the `bookdb` database:
+
+```php
+$host     = 'localhost';
+$db       = 'bookdb';
+$user     = 'root';
+$password = '';
+$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+try {
+	$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+	$conn = new PDO($dsn, $user, $password, $options);
+
+	if ($conn) {
+		echo "Connected to the $db database successfully!";
+	}
+} catch (PDOException $e) {
+	echo $e->getMessage();
+}
+```
+
+To make it more reusable, you can define a function called `connect()` that returns a new database connection and return it from the `connect.php` file:
+
+```php
+$host     = 'localhost';
+$db       = 'bookdb';
+$user     = 'root';
+$password = '';
+
+function connect($host, $db, $user, $password) {
+	$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+	try {
+		$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+
+		return new PDO($dsn, $user, $password, $options);
+	} catch (PDOException $e) {
+		die($e->getMessage());
+	}
+}
+
+return connect($host, $db, $user, $password);
+```
+
+```php
+$pdo = require 'connect.php';
+var_dump($pdo);
+```
+
+### Using the class-based approach
+
+To use a [class](https://www.phptutorial.net/php-oop/php-objects/) instead of a [function](https://www.phptutorial.net/php-tutorial/php-functions/) to create a new database connection, you can follow these steps:
+
+First, create a new file called `Connection.php` and define the `Connection` class:
+
+```php
+$host     = 'localhost';
+$db       = 'bookdb';
+$user     = 'root';
+$password = '';
+
+class Connection {
+	public static function make($host, $db, $user, $password) {
+		$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+
+		try {
+			$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+
+			return new PDO($dsn, $username, $password, $options);
+		} catch (PDOException $e) {
+			die($e->getMessage());
+		}
+	}
+}
+
+return Connection::make($host, $db, $user, $password);
+```
+
+The `Connection` class has the `make()` method that returns a new instance of PDO.
+
+Second, use the `Connection.php` file in other script files as follows:
+
+```php
+$pdo = require 'Connection.php';
+var_dump($pdo);
+```
+
+In this tutorial, you have learned how to create the `bookdb` database in the MySQL server and developed a reusable script for connecting the database.
