@@ -245,3 +245,196 @@ var_dump($pdo);
 ```
 
 In this tutorial, you have learned how to create the `bookdb` database in the MySQL server and developed a reusable script for connecting the database.
+
+## CRUD using PDO
+
+### The steps for inserting a row into a table
+
+To insert a row into a table, you follow these steps:
+
+-   First, connect to the database by creating a new `PDO` object.
+-   Second, construct the `INSERT` statement. If you need to pass a value to the `INSERT` statement, you can use the placeholders in the format `:parameter`. Later, you can substitute the `parameter` by its value.
+-   Third, create a prepared statement by calling the `prepare()` method of the PDO object. The `prepare()` method returns an instance of the `PDOStatement` class.
+-   Finally, call the `execute()` method of the prepared statement and pass the values.
+
+### Inserting a row into a table example
+
+```php
+$pdo = require_once 'connect.php';
+
+$name = 'Macmillan';
+$sql = 'INSERT INTO publishers(name) VALUES(:name)';
+
+$statement = $pdo->prepare($sql);
+
+$statement->execute([
+	':name' => $name
+]);
+
+$publisher_id = $pdo->lastInsertId();
+
+echo 'The publisher id ' . $publisher_id . ' was inserted';
+```
+
+### Updating data from PHP using PDO
+
+To update data in a table from PHP using PDO, you follow these steps:
+
+-   First, connect to the database by creating a new instance of the `PDO` class.
+-   Next, construct an SQL `UPDATE` statement to update data in a table.
+-   Then, call the `prepare()` method of the PDO object. The `prepare()` method returns a new instance of the `PDOStatement` class.
+-   After that, bind the values to the `UPDATE` statement by calling the `bindParam()` method of the `PDOStatement` object.
+-   Finally, execute the statement by calling the `execute()` method of the `PDOStatement`.
+
+### PHP PDO update example
+
+```php
+$pdo = require_once 'connect.php';
+
+$publisher = [
+	'publisher_id' => 1,
+	'name' => 'McGraw-Hill Education'
+];
+
+$sql = 'UPDATE publishers
+        SET name = :name
+        WHERE publisher_id = :publisher_id';
+
+// prepare statement
+$statement = $pdo->prepare($sql);
+
+// bind params
+$statement->bindParam(':publisher_id', $publisher['publisher_id'], PDO::PARAM_INT);
+$statement->bindParam(':name', $publisher['name']);
+
+// execute the UPDATE statment
+if ($statement->execute()) {
+	echo 'The publisher has been updated successfully!';
+}
+```
+
+### PDO Querying Data
+
+`query()` method of the `PDO` object and a prepared statement.
+
+To select data from a table using PDO, you can use:
+
+-   The `query()` method of a PDO object.
+-   Or a prepared statement.
+
+When a query doesn’t have any parameters, you can use the `query()` method. For example:
+
+```sql
+SELECT * FROM publishers;
+```
+
+However, if a query accepts one or more parameters, you should use a prepared statement for security reasons.
+
+#### Using the query() method to select data from a table
+
+To query data from a table using the `query()` method, you follow these steps:
+
+1.  Create a database connection to the database server.
+2.  Execute a `SELECT` statement by passing it to the `query()` method of a `PDO` object.
+
+The `query()` method returns a `PDOStatement` object. If an error occurs, the `query()` method returns `false`.
+
+```php
+$pdo = require 'connect.php';
+
+$sql = 'SELECT publisher_id, name 
+		FROM publishers';
+
+$statement = $pdo->query($sql);
+
+// get all publishers
+$publishers = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+if ($publishers) {
+	// show the publishers
+	foreach ($publishers as $publisher) {
+		echo $publisher['name'] . '<br>';
+	}
+}
+```
+When you use the `PDO::FETCH_ASSOC` mode, the `PDOStatement` returns an associative of elements in which the key of each element is the column name of the result set.
+
+#### Using a prepared statement to query data
+The following example illustrates how to use a prepared statement to query data from a table:
+
+```php
+$publisher_id = 1;
+
+// connect to the database and select the publisher
+$pdo = require 'connect.php';
+
+$sql = 'SELECT publisher_id, name 
+		FROM publishers
+        WHERE publisher_id = :publisher_id';
+
+$statement = $pdo->prepare($sql);
+$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+$statement->execute();
+$publisher = $statement->fetch(PDO::FETCH_ASSOC);
+
+if ($publisher) {
+	echo $publisher['publisher_id'] . '.' . $publisher['name'];
+} else {
+	echo "The publisher with id $publisher_id was not found.";
+}
+
+```
+
+### PHP PDO Delete
+To delete one or more rows from a table, you can use a prepared statement. Here are the steps:
+
+-   First, make a connection to the database by creating a new instance of the PDO class.
+-   Next, construct a `DELETE` statement.
+-   Then, create a prepared statement by calling the `prepare()` method of the PDO instance.
+-   After that, bind the parameters, if any, using the `bindParam()` method.
+-   Finally, execute the `DELETE` statement by calling the `execute()` method of the prepared statement.
+
+#### Delete one row from a table
+The following example illustrates how to use a prepared statement to delete the publisher with id 1 from the `publishers` table:
+
+```php
+$publisher_id = 1;
+
+// connect to the database and select the publisher
+$pdo = require 'connect.php';
+
+// construct the delete statement
+$sql = 'DELETE FROM publishers
+        WHERE publisher_id = :publisher_id';
+
+// prepare the statement for execution
+$statement = $pdo->prepare($sql);
+$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+
+// execute the statement
+if ($statement->execute()) {
+	echo 'publisher id ' . $publisher_id . ' was deleted successfully.';
+}
+```
+
+#### Delete multiple rows from a table
+Deleting multiple rows from the table is the same as the steps for deleting one row from a table.
+To find the number of rows deleted, you use the `rowCount()` method of the `PDOStatement` object.
+The following example shows how to delete publishers with an id greater than 3:
+
+```php
+$publisher_id = 3;
+
+// connect to the database and select the publisher
+$pdo = require 'connect.php';
+
+$sql = 'DELETE FROM publishers
+        WHERE publisher_id > :publisher_id';
+
+$statement = $pdo->prepare($sql);
+$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+
+if ($statement->execute()) {
+	echo $statement->rowCount() . ' row(s) was deleted successfully.';
+}
+```
