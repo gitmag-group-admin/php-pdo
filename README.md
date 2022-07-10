@@ -1,20 +1,16 @@
 # PHP PDO
 
- - What is PDO
- - Connecting to MySQL
- - CRUD using PDO
-	 - insert
-	 - update
-	 - read
-	 - delete
-- fetch
-- fetchAll
-- fetchObject
-- fetchColumn
-- PDO FETCH_GROUP
-- PDO FETCH_KEY_PAIR
-- PDO FETCH_CLASS
-- Transaction
+ - [What is PDO](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#what-is-pdo)
+ - [Connecting to MySQL](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#connecting-to-mysql)
+ - [CRUD using PDO](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#crud-using-pdo)
+- [fetch](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetch)
+- [fetchAll](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchall)
+- [fetchObject](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchobject)
+- [fetchColumn](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchcolumn)
+- [PDO FETCH_GROUP](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#pdo-fetch_group)
+- [PDO FETCH_KEY_PAIR](PDO%20FETCH_KEY_PAIR)
+- [PDO FETCH_CLASS](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#pdo-fetch_class)
+- [Transaction](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#php-pdo-transaction)
 
 ## What is PDO
 PHP PDO is a database access layer that provides a uniform interface for working with multiple databases.
@@ -734,7 +730,7 @@ echo $publisher_name;
 ```
 ## PDO FETCH_GROUP
 
-## Introduction to the PDO::FETCH_GROUP mode
+### Introduction to the PDO::FETCH_GROUP mode
 
 The `PDO::FETCH_GROUP` allows you to group rows from the result set into a nested array, where the indexes will be the unique values from the column and the values will be arrays of the remaining columns.
 
