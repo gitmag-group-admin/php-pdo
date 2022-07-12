@@ -50,9 +50,9 @@ Suppose you have a local MySQL database server that has the following informatio
 
 ```php
 $host = 'localhost';
-$db = 'bookdb';
+$db = 'blog';
 $user = 'root';
-$password = 'S@cr@t1!';
+$password = 'P@ssW0rd';
 ```
 
 ### 2) Enable PDO_MySQL Driver
@@ -85,7 +85,7 @@ PDO uses a data source name (DSN) that contains the following information:
 PDO uses this information to make a connection to the database server. To connect to the MySQL database server, you use the following data source name format:
 
 ```php
-$dsn = "mysql:host=localhost;dbname=bookdb;charset=UTF8";
+$dsn = "mysql:host=localhost;dbname=blog;charset=UTF8";
 ```
 
 > Note that the charset UTF-8 sets the character set of the database connection to UTF-8.
@@ -96,9 +96,9 @@ The following `index.php` script illustrates how to connect to the `bookdb` data
 
 ```php
 $host = 'localhost';
-$db = 'bookdb';
+$db = 'blog';
 $user = 'root';
-$password = 'S@cr@t1!';
+$password = 'P@ssW0rd';
 $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
 try {
@@ -111,11 +111,6 @@ try {
 	echo $e->getMessage();
 }
 ```
-How it works.
-
--   First, create a new PDO object with the data source name, user, and password. The PDO object is an instance of the `PDO` class.
--   Second, show the success message if the connection is established successfully or an error message if an error occurs.
-
 If you have everything set up correctly, you will see the following message:
 ```
 Connected to the bookdb database successfully!
@@ -175,9 +170,9 @@ create a new `connect.php` file that connects to the `bookdb` database:
 
 ```php
 $host     = 'localhost';
-$db       = 'bookdb';
+$db       = 'blog';
 $user     = 'root';
-$password = '';
+$password = 'P@ss@0rd';
 $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
 try {
@@ -196,9 +191,9 @@ To make it more reusable, you can define a function called `connect()` that retu
 
 ```php
 $host     = 'localhost';
-$db       = 'bookdb';
+$db       = 'blog';
 $user     = 'root';
-$password = '';
+$password = 'P@ssW0rd';
 
 function connect($host, $db, $user, $password) {
 	$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
@@ -228,9 +223,9 @@ First, create a new file called `Connection.php` and define the `Connection` cla
 
 ```php
 $host     = 'localhost';
-$db       = 'bookdb';
+$db       = 'blog';
 $user     = 'root';
-$password = '';
+$password = 'P@ssW0rd';
 
 class Connection {
 	public static function make($host, $db, $user, $password) {
@@ -276,8 +271,8 @@ To insert a row into a table, you follow these steps:
 ```php
 $pdo = require_once 'connect.php';
 
-$name = 'Macmillan';
-$sql = 'INSERT INTO publishers(name) VALUES(:name)';
+$name = 'Economy';
+$sql = 'INSERT INTO categories(name) VALUES(:name)';
 
 $statement = $pdo->prepare($sql);
 
@@ -285,9 +280,9 @@ $statement->execute([
 	':name' => $name
 ]);
 
-$publisher_id = $pdo->lastInsertId();
+$category_id = $pdo->lastInsertId();
 
-echo 'The publisher id ' . $publisher_id . ' was inserted';
+echo 'The category id ' . $category_id. ' was inserted';
 ```
 
 ### Updating data from PHP using PDO
@@ -306,24 +301,24 @@ To update data in a table from PHP using PDO, you follow these steps:
 $pdo = require_once 'connect.php';
 
 $publisher = [
-	'publisher_id' => 1,
-	'name' => 'McGraw-Hill Education'
+	'id' => 5,
+	'name' => 'world'
 ];
 
-$sql = 'UPDATE publishers
+$sql = 'UPDATE categories
         SET name = :name
-        WHERE publisher_id = :publisher_id';
+        WHERE id = :category_id';
 
 // prepare statement
 $statement = $pdo->prepare($sql);
 
 // bind params
-$statement->bindParam(':publisher_id', $publisher['publisher_id'], PDO::PARAM_INT);
-$statement->bindParam(':name', $publisher['name']);
+$statement->bindParam(':category_id', $category['id'], PDO::PARAM_INT);
+$statement->bindParam(':name', $category['name']);
 
 // execute the UPDATE statment
 if ($statement->execute()) {
-	echo 'The publisher has been updated successfully!';
+	echo 'The category has been updated successfully!';
 }
 ```
 
@@ -339,7 +334,7 @@ To select data from a table using PDO, you can use:
 When a query doesn’t have any parameters, you can use the `query()` method. For example:
 
 ```sql
-SELECT * FROM publishers;
+SELECT * FROM posts;
 ```
 
 However, if a query accepts one or more parameters, you should use a prepared statement for security reasons.
@@ -356,18 +351,17 @@ The `query()` method returns a `PDOStatement` object. If an error occurs, the `q
 ```php
 $pdo = require 'connect.php';
 
-$sql = 'SELECT publisher_id, name 
-		FROM publishers';
+$sql = 'SELECT * FROM posts';
 
 $statement = $pdo->query($sql);
 
-// get all publishers
-$publishers = $statement->fetchAll(PDO::FETCH_ASSOC);
+// get all posts
+$posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-if ($publishers) {
-	// show the publishers
-	foreach ($publishers as $publisher) {
-		echo $publisher['name'] . '<br>';
+if ($posts) {
+	// show the posts
+	foreach ($posts as $post) {
+		echo $post['title'] . '<br>';
 	}
 }
 ```
@@ -377,24 +371,23 @@ When you use the `PDO::FETCH_ASSOC` mode, the `PDOStatement` returns an associat
 The following example illustrates how to use a prepared statement to query data from a table:
 
 ```php
-$publisher_id = 1;
+$post_id = 5;
 
-// connect to the database and select the publisher
+// connect to the database and select the post
 $pdo = require 'connect.php';
 
-$sql = 'SELECT publisher_id, name 
-		FROM publishers
-        WHERE publisher_id = :publisher_id';
+$sql = 'SELECT * FROM posts
+        WHERE id = :post_id';
 
 $statement = $pdo->prepare($sql);
-$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+$statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
 $statement->execute();
-$publisher = $statement->fetch(PDO::FETCH_ASSOC);
+$post = $statement->fetch(PDO::FETCH_ASSOC);
 
-if ($publisher) {
-	echo $publisher['publisher_id'] . '.' . $publisher['name'];
+if ($post) {
+	echo $post['id'] . '.' . $post['title'];
 } else {
-	echo "The publisher with id $publisher_id was not found.";
+	echo "The publisher with id $post_id was not found.";
 }
 
 ```
@@ -409,25 +402,25 @@ To delete one or more rows from a table, you can use a prepared statement. Here 
 -   Finally, execute the `DELETE` statement by calling the `execute()` method of the prepared statement.
 
 #### Delete one row from a table
-The following example illustrates how to use a prepared statement to delete the publisher with id 1 from the `publishers` table:
+The following example illustrates how to use a prepared statement to delete the publisher with id 1 from the `categories` table:
 
 ```php
-$publisher_id = 1;
+$category_id = 1;
 
-// connect to the database and select the publisher
+// connect to the database and select the category
 $pdo = require 'connect.php';
 
 // construct the delete statement
-$sql = 'DELETE FROM publishers
-        WHERE publisher_id = :publisher_id';
+$sql = 'DELETE FROM categories
+        WHERE id = :category_id';
 
 // prepare the statement for execution
 $statement = $pdo->prepare($sql);
-$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+$statement->bindParam(':category_id', $category_id, PDO::PARAM_INT);
 
 // execute the statement
 if ($statement->execute()) {
-	echo 'publisher id ' . $publisher_id . ' was deleted successfully.';
+	echo 'category id ' . $category_id . ' was deleted successfully.';
 }
 ```
 
@@ -437,16 +430,16 @@ To find the number of rows deleted, you use the `rowCount()` method of the `PDOS
 The following example shows how to delete publishers with an id greater than 3:
 
 ```php
-$publisher_id = 3;
+$category_id = 2;
 
-// connect to the database and select the publisher
+// connect to the database and select the category
 $pdo = require 'connect.php';
 
-$sql = 'DELETE FROM publishers
-        WHERE publisher_id > :publisher_id';
+$sql = 'DELETE FROM categories
+        WHERE id > :category_id';
 
 $statement = $pdo->prepare($sql);
-$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+$statement->bindParam(':category_id', $category_id, PDO::PARAM_INT);
 
 if ($statement->execute()) {
 	echo $statement->rowCount() . ' row(s) was deleted successfully.';
