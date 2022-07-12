@@ -489,7 +489,7 @@ The following example shows how to use the `fetch()` method to select each row f
 $pdo = require 'connect.php';
 
 // execute a query
-$sql = 'SELECT book_id, title FROM books';
+$sql = 'SELECT * FROM posts';
 $statement = $pdo->query($sql);
 
 // fetch the next row
@@ -511,16 +511,15 @@ The following example shows how to `fetch()` to fetch a book from the books tabl
 // connect to the database to get the PDO instance
 $pdo = require 'connect.php';
 
-$sql = 'SELECT book_id, title 
-        FROM books 
-        WHERE publisher_id =:publisher_id';
+$sql = 'SELECT * FROM posts
+        WHERE id =:post_id';
 
 // prepare the query for execution
 $statement = $pdo->prepare($sql);
 
 // execute the query
 $statement->execute([
-    ':publisher_id' => 1
+    ':post_id' => 1
 ]);
 
 // fetch the next row
@@ -544,7 +543,7 @@ The `$mode` parameter determines how the `fetchAll()` returns the next row. The 
 
 -   `PDO::FETCH_BOTH` – returns an array indexed by both column name and 0-indexed column number. This is the default.
 -   `PDO::FETCH_ASSOC` – returns an array indexed by column name
--   `[PDO::FETCH_CLASS](https://www.phptutorial.net/php-pdo/pdo-fetch_class/)` – returns a new class instance by mapping the columns to the object’s properties.
+-   `PDO::FETCH_CLASS` – returns a new class instance by mapping the columns to the object’s properties.
 
 The `fetchAll()` method returns an array that contains all rows of a result set.
 
@@ -565,18 +564,17 @@ The following example illustrates how to use the `fetchAll()` method to select a
 // connect to the database to get the PDO instance
 $pdo = require 'connect.php';
 
-$sql = 'SELECT publisher_id, name 
-        FROM publishers';
+$sql = 'SELECT * FROM posts';
 
 // execute a query
 $statement = $pdo->query($sql);
 
 // fetch all rows
-$publishers = $statement->fetchAll(PDO::FETCH_ASSOC);
+$users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 // display the publisher name
-foreach ($publishers as $publisher) {
-    echo $publisher['name'] . '<br>';
+foreach ($posts as $post) {
+    echo $post['title'] . '<br>';
 }
 ```
 
@@ -593,21 +591,20 @@ The following example shows how to use `fetchAll()` to fetch all publishers with
 // connect to the database to get the PDO instance
 $pdo = require 'connect.php';
 
-$sql = 'SELECT publisher_id, name 
-        FROM publishers
-        WHERE publisher_id > :publisher_id';
+$sql = 'SELECT * FROM posts
+        WHERE id > :post_id';
 
 // execute a query
 $statement = $pdo->prepare($sql);
 $statement->execute([
-    ':publisher_id' => 2
+    ':post_id' => 2
 ]);
 // fetch all rows
-$publishers = $statement->fetchAll(PDO::FETCH_ASSOC);
+$posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-// display the publishers
-foreach ($publishers as $publisher) {
-    echo $publisher['publisher_id'] . '.' . $publisher['name'] . '<br>';
+// display the posts
+foreach ($posts as $post) {
+    echo $post['id'] . '.' . $publisher['title'] . '<br>';
 }
 ```
 
@@ -615,27 +612,19 @@ foreach ($publishers as $publisher) {
 
 ### Introduction to the fetchObject() method
 
-Suppose that you have a `pulishers` table:
-
-```sql
-CREATE TABLE IF NOT EXISTS publishers (
-    publisher_id INT AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (publisher_id)
-);
-```
-
-and a `Publisher` class:
+and a `User` class:
 
 ```php
-
-class Publisher {
-    private $publisher_id;
+class User{
+    private $id;
     private $name;
+    private $email;
+    private $passwrod;
+    private $date;
 }
 ```
 
-To fetch each row from the `publishers` table and returns it as a `Publisher` object, you use the `fetchObject()` method:
+To fetch each row from the `users` table and returns it as a `User` object, you use the `fetchObject()` method:
 
 ```php
 public function fetchObject(
@@ -656,32 +645,33 @@ The `fetchObject()` maps the columns of the row with the properties of the objec
 -   First, assign the column value to the property with the same name.
 -   Second, call the `__set()` magic method if a column doesn’t have a property in the class with the same name. If the classs has no `__set()` magic method, create a public property with the value derived from the column.
 
-### PHP fetchobject() method example
+### PHP fetchObject() method example
 
 The following example shows how to use the `fetchObject()` method to fetch a row from the `publishers` table and returns a `Publisher` object:
 
 ```php
-class Publisher
-{
-    private $publisher_id;
+class User{
+    private $id;
     private $name;
+    private $email;
+    private $passwrod;
+    private $date;
 }
 
 // connect to the database
 $pdo = require 'connect.php';
 
 // execute the query
-$sql = 'SELECT publisher_id, name 
-        FROM publishers 
-        WHERE publisher_id=:publisher_id';
+$sql = 'SELECT * FROM users
+        WHERE id=:user_id';
 
 $statement = $pdo->prepare($sql);
-$statement->execute([':publisher_id' => 1]);
+$statement->execute([':user_id' => 1]);
 
-// fetch the row into the Publisher object
-$publisher = $statement->fetchObject('Publisher');
+// fetch the row into the User object
+$user = $statement->fetchObject('User');
 
-var_dump($publisher);
+var_dump($user);
 ```
 
 ## fetchColumn
@@ -709,17 +699,16 @@ The following example uses the `fetchColumn()` method to get the name of the pub
 ```php
 $pdo = require 'connect.php';
 
-$sql = 'SELECT name 
-        FROM publishers 
-        WHERE publisher_id = :publisher_id';
+$sql = 'SELECT name FROM users
+        WHERE id = :user_id';
 
 $statement = $pdo->prepare($sql);
 $statement->execute(
-    ['publisher_id' => 1]
+    ['user_id' => 1]
 );
 
-$publisher_name = $pdo->fetchColumn();
-echo $publisher_name;
+$user_name = $pdo->fetchColumn();
+echo $user_name;
 ```
 ## PDO FETCH_GROUP
 
@@ -730,31 +719,31 @@ The `PDO::FETCH_GROUP` allows you to group rows from the result set into a neste
 For example, if you have a query like this:
 
 ```sql
-SELECT role, username, email FROM users;
+SELECT id, name, email, `date` FROM users;
 ```
 
 The `PDO::FETCH_GROUP` mode will return the following output:
 
 ```php
 [
-    'admin' => [
+    'ali' => [
         0 => [
-            'username' => 'admin',
-            'email' => 'admin@phptutorial.net'
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'ali@yahoo.com'
         ],
         1 => [
-            'username' => 'bob',
-            'email' => 'bob@phptutorial.net'
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'alireza@gmail.com'
         ]
     ]
-    'contributor' => [
+    'reza' => [
         0 => [
-            'username' => 'alex',
-            'email' => 'alex@phptutorial.net'
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'reza@gmail.com'
         ],
         1 => [
-            'username' => 'alice',
-            'email' => 'alice@phptutorial.net'
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'mohammadreza@gmail.com'
         ]
     ]
 ]
@@ -764,18 +753,20 @@ The `PDO::FETCH_GROUP` is helpful in case you want to group rows by unique value
 
 ### The PDO::FETCH_GROUP example
 
-The following example selects the books and publishers from the `books` and `publishers` table. The `PDO::FETCH_GROUP` groups the books by the publisher names:
+The following example selects the posts and users from the `posts` and `users` table. The `PDO::FETCH_GROUP` groups the posts by the user names:
 
 ```php
+<?php
+
 $pdo = require 'connect.php';
 
-$sql = 'SELECT name, book_id, title
-        FROM publishers p
-        INNER JOIN books b ON b.publisher_id = p.publisher_id';
+$sql = 'SELECT * From posts 
+			INNER JOIN users ON posts.user_id = users.id';
 
 $statement = $pdo->query($sql);
 
-$publishers = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
+$users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -786,12 +777,12 @@ $publishers = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
     <title>Books</title>
 </head>
 <body>
-    <label for="book">Select a book:</label>
-    <select name="book" id="book">
-        <?php foreach ($publishers as $publisher => $books) : ?>
-        <optgroup label="<?php echo $publisher ?>">
-            <?php foreach ($books as $book) : ?>
-            <option value="<?php echo $book['book_id'] ?>"><?php echo $book['title'] ?></option>
+    <label for="post">Select a post:</label>
+    <select name="post" id="post">
+        <?php foreach ($user as $usr => $post) : ?>
+        <optgroup label="<?= $user ?>">
+            <?php foreach ($posts as $post) : ?>
+            <option value="<?= $post['id'] ?>"><?= $post['title'] ?></option>
             <?php endforeach ?>
         </optgroup>
         <?php endforeach ?>
@@ -814,11 +805,11 @@ For example, you can create a `<select>` element with the values are publisher i
 ```php
 $pdo = require 'connect.php';
 
-$sql = 'SELECT publisher_id, name 
-        FROM publishers';
+$sql = 'SELECT id, name 
+        FROM users';
 
 $statement = $pdo->query($sql);
-$publishers = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
+$users = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -828,10 +819,10 @@ $publishers = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
     <title>Publishers</title>
 </head>
 <body>
-    <label for="publisher">Select a pulisher</label>
-    <select name="publisher" id="publisher">
-        <?php foreach ($publishers as $publisher_id => $name): ?>
-        <option value="<?php echo $publisher_id ?>"><?php echo $name ?></option>
+    <label for="user">Select a user</label>
+    <select name="user" id="user">
+        <?php foreach ($users as $user_id => $name): ?>
+        <option value="<?= $user_id ?>"><?= $name ?></option>
         <?php endforeach ?>
     </select>
 </body>
@@ -842,59 +833,61 @@ $publishers = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
 
 ### Introduction to the PDO::FETCH_CLASS mode
 
-Each row in the `books` table can map to an instance of the `Book` class.
+Each row in the `posts` table can map to an instance of the `Post` class.
 
-To select data from the `books` table and map the columns to the properties of a `Book` object, you can use the `PDO::FETCH_CLASS` mode. For example:
+To select data from the `posts` table and map the columns to the properties of a `Post` object, you can use the `PDO::FETCH_CLASS` mode. For example:
 
 ```php
-class Book
+class Post
 {
 }
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT book_id, title, isbn, published_date
-        FROM books
-        WHERE book_id = :book_id';
+$sql = 'SELECT * FROM posts
+        WHERE id = :post_id';
 
 $statement = $pdo->prepare($sql);
-$statement->execute([':book_id' => 1]);
-$statement->setFetchMode(PDO::FETCH_CLASS, 'Book');
-$book = $statement->fetch();
+$statement->execute([':post_id' => 1]);
+$statement->setFetchMode(PDO::FETCH_CLASS, 'Post');
+$post = $statement->fetch();
 
-var_dump($book);
+var_dump($post);
 ```
 
 ### Returning an array of objects
 
-The following example shows how to use the `PDO::FETCH_CLASS` mode to select data from the `books` table and return an array of `Book` objects:
+The following example shows how to use the `PDO::FETCH_CLASS` mode to select data from the `posts` table and return an array of `Post` objects:
 
 ```php
-class Book
+class Post
 {
 }
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT book_id, title, isbn, published_date
-        FROM books';
+$sql = 'SELECT * FROM books';
 
-$books = $statement->query()->fetchAll(PDO::FETCH_CLASS, 'Book');
+$posts = $statement->query()->fetchAll(PDO::FETCH_CLASS, 'Post');
 
-var_dump($books);
+var_dump($posts);
 ```
 
 ### Assigning object properties
 
-The following example illustrates how to select one row from the `books` table and return a new instance of the `Book` class:
+The following example illustrates how to select one row from the `posts` table and return a new instance of the `Post` class:
 
 ```php
 class Book
 {
-    private $book_id;
+    private $id;
     private $title;
-    private $isbn;
-    private $published_date;
+    private $content;
+    private $image;
+    private $view;
+    private $status;
+    private $category;
+    private $user;
 
     public function __set($name, $value)
     {
@@ -904,22 +897,18 @@ class Book
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT 
-            book_id, 
-            title, 
-            isbn, 
-            published_date, 
-            publisher_id
-        FROM books
-        WHERE book_id = :book_id';
+$sql = 'SELECT * From posts 
+			INNER JOIN users ON posts.user_id = users.id
+			INNER JOIN categories ON posts.category_id = categories.id
+			WHERE posts.id = :post_id';
 
 $statement = $pdo->prepare($sql);
-$statement->execute([':book_id' => 1]);
-$statement->setFetchMode(PDO::FETCH_CLASS, 'Book');
+$statement->execute([':post_id' => 1]);
+$statement->setFetchMode(PDO::FETCH_CLASS, 'Post');
 
-$book = $statement->fetch();
+$post = $statement->fetch();
 
-var_dump($book);
+var_dump($post);
 ```
 
 ### Assigning object properties and calling constructor
@@ -929,29 +918,30 @@ By default, PDO assigns column values to the object properties before calling th
 To instruct PDO to call the constructor before assigning column values to object properties, you combine the `PDO::FETCH_CLASS` with `PDO::FETCH_PROPS_LATE` flag. For example:
 
 ```php
-class Book
+class Post
 {
     public function __construct()
     {
-        if (isset($this->isbn)) {
-            echo 'ISBN:' . $this->isbn;
+        if ($this->view == 0) {
+            echo 'this post don`t have view';
         }
-        echo 'ISBN has not assigned yet.';
+        echo "this post have $this->view views";
     }
 }
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT book_id, title, isbn, published_date, 
-        FROM books
-        WHERE book_id = :book_id';
+$sql = 'SELECT * From posts 
+			INNER JOIN users ON posts.user_id = users.id
+			INNER JOIN categories ON posts.category_id = categories.id
+			WHERE posts.id = :post_id';
 
 $statement = $pdo->prepare($sql);
-$statement->execute([':book_id' => 1]);
-$statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Book');
-$book = $statement->fetch();
+$statement->execute([':post_id' => 1]);
+$statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Post');
+$post = $statement->fetch();
 
-var_dump($book);
+var_dump($post);
 ```
 
 ## PHP PDO Transaction
