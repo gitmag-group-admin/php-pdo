@@ -92,7 +92,7 @@ $dsn = "mysql:host=localhost;dbname=blog;charset=UTF8";
 
 ### Connecting to MySQL
 
-The following `index.php` script illustrates how to connect to the `bookdb` database on the MySQL database server with the `root` account:
+The following `index.php` script illustrates how to connect to the `blog` database on the MySQL database server with the `root` account:
 
 ```php
 $host = 'localhost';
@@ -113,7 +113,7 @@ try {
 ```
 If you have everything set up correctly, you will see the following message:
 ```
-Connected to the bookdb database successfully!
+Connected to the blog database successfully!
 ```
 
 ### Error handling strategies
@@ -155,7 +155,7 @@ SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password
 If you provide an invalid database name or the database does not exist, you get the following error message:
 
 ```
-SQLSTATE[HY000] [1049] Unknown database 'bookdb'
+SQLSTATE[HY000] [1049] Unknown database 'blog'
 ```
 
 If you provide an invalid database hostname, the following error message will display:
@@ -164,9 +164,9 @@ If you provide an invalid database hostname, the following error message will di
 SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such ho
 ```
 
-### Connecting to the bookdb database from PHP
+### Connecting to the blog database from PHP
 
-create a new `connect.php` file that connects to the `bookdb` database:
+create a new `connect.php` file that connects to the `blog` database:
 
 ```php
 $host     = 'localhost';
@@ -252,8 +252,6 @@ Second, use the `Connection.php` file in other script files as follows:
 $pdo = require 'Connection.php';
 var_dump($pdo);
 ```
-
-In this tutorial, you have learned how to create the `bookdb` database in the MySQL server and developed a reusable script for connecting the database.
 
 ## CRUD using PDO
 
