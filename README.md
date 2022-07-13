@@ -158,12 +158,6 @@ If you provide an invalid database name or the database does not exist, you get 
 SQLSTATE[HY000] [1049] Unknown database 'blog'
 ```
 
-If you provide an invalid database hostname, the following error message will display:
-
-```
-SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such ho
-```
-
 ### Connecting to the blog database from PHP
 
 create a new `connect.php` file that connects to the `blog` database:
