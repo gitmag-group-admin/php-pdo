@@ -1,16 +1,16 @@
 # PHP PDO
 
- - [What is PDO](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#what-is-pdo)
- - [Connecting to MySQL](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#connecting-to-mysql)
- - [CRUD using PDO](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#crud-using-pdo)
-- [fetch](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetch)
-- [fetchAll](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchall)
-- [fetchObject](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchobject)
-- [fetchColumn](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#fetchcolumn)
-- [PDO FETCH_GROUP](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#pdo-fetch_group)
-- [PDO FETCH_KEY_PAIR](PDO%20FETCH_KEY_PAIR)
-- [PDO FETCH_CLASS](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#pdo-fetch_class)
-- [Transaction](https://github.com/gitmag-group-admin/php-pdo/blob/main/README.md#php-pdo-transaction)
+ - [What is PDO](#what-is-pdo)
+ - [Connecting to MySQL](#connecting-to-mysql)
+ - [CRUD using PDO](#crud-using-pdo)
+- [fetch](#fetch)
+- [fetchAll](#fetchall)
+- [fetchObject](#fetchobject)
+- [fetchColumn](#fetchcolumn)
+- [PDO FETCH_GROUP](#pdo-fetch_group)
+- [PDO FETCH_KEY_PAIR](#PDO%20FETCH_KEY_PAIR)
+- [PDO FETCH_CLASS](#pdo-fetch_class)
+- [Transaction](#php-pdo-transaction)
 
 ## What is PDO
 PHP PDO is a database access layer that provides a uniform interface for working with multiple databases.
@@ -45,8 +45,8 @@ Before connecting to a MySQL database server, you need to have:
 Suppose you have a local MySQL database server that has the following information:
 
 -   The host is `localhost`.
--   The `bookdb` database on the local database server.
--   The account with the user `root` and password `'S@cr@t1!'` that can access the `bookdb` database.
+-   The `blog` database on the local database server.
+-   The account with the user `root` and password `P@ssW0rd` that can access the `blog` database.
 
 ```php
 $host = 'localhost';
