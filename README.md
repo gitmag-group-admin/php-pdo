@@ -292,7 +292,7 @@ To update data in a table from PHP using PDO, you follow these steps:
 ```php
 $pdo = require_once 'connect.php';
 
-$publisher = [
+$category = [
 	'id' => 5,
 	'name' => 'world'
 ];
