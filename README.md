@@ -397,7 +397,7 @@ To delete one or more rows from a table, you can use a prepared statement. Here 
 The following example illustrates how to use a prepared statement to delete the publisher with id 1 from the `categories` table:
 
 ```php
-$category_id = 1;
+$category_id = 7;
 
 // connect to the database and select the category
 $pdo = require 'connect.php';
@@ -422,7 +422,7 @@ To find the number of rows deleted, you use the `rowCount()` method of the `PDOS
 The following example shows how to delete publishers with an id greater than 3:
 
 ```php
-$category_id = 2;
+$category_id = 6;
 
 // connect to the database and select the category
 $pdo = require 'connect.php';
