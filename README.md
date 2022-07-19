@@ -337,7 +337,7 @@ To query data from a table using the `query()` method, you follow these steps:
 
 -   First, Create a database connection to the database server.
 -   Second, construct the `SELECT` statement.
--   Third, Execute a `SELECT` statement by passing it to the `query()` method of a `PDO` object. The `query()` method returns a `PDOStatement` object. If an error occurs, the `query()` method returns `false`.
+-   Third, Execute a `SELECT` statement by passing it to the `query()` method of a `PDO` object. The `query()` method returns a `PDOStatement` object.
 -   Finally, call the `fetchAll()` method of the prepared statement and pass select type.
 
 ```php
