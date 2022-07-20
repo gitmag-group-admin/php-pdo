@@ -385,7 +385,7 @@ To delete one or more rows from a table, you can use a prepared statement. Here 
 -   Finally, execute the `DELETE` statement by calling the `execute()` method of the prepared statement.
 
 #### Delete one row from a table
-The following example illustrates how to use a prepared statement to delete the publisher with id 1 from the `categories` table:
+The following example illustrates how to use a prepared statement to delete the publisher with id 7 from the `categories` table:
 
 ```php
 $category_id = 7;
@@ -410,10 +410,10 @@ if ($statement->execute()) {
 #### Delete multiple rows from a table
 Deleting multiple rows from the table is the same as the steps for deleting one row from a table.
 To find the number of rows deleted, you use the `rowCount()` method of the `PDOStatement` object.
-The following example shows how to delete publishers with an id greater than 3:
+The following example shows how to delete publishers with an id greater than 2:
 
 ```php
-$category_id = 6;
+$category_id = 4;
 
 // connect to the database and select the category
 $pdo = require 'connect.php';
