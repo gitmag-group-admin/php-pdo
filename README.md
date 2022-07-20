@@ -350,12 +350,7 @@ $statement = $pdo->query($sql);
 // get all posts
 $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-if ($posts) {
-	// show the posts
-	foreach ($posts as $post) {
-		echo $post['title'] . '<br>';
-	}
-}
+var_dump($posts)
 ```
 When you use the `PDO::FETCH_ASSOC` mode, the `PDOStatement` returns an associative of elements in which the key of each element is the column name of the result set.
 
@@ -376,11 +371,7 @@ $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
 $statement->execute();
 $post = $statement->fetch(PDO::FETCH_ASSOC);
 
-if ($post) {
-	echo $post['id'] . '.' . $post['title'];
-} else {
-	echo "The publisher with id $post_id was not found.";
-}
+var_dump($posts)
 
 ```
 
