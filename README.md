@@ -350,7 +350,7 @@ $statement = $pdo->query($sql);
 // get all posts
 $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($posts)
+var_dump($posts);
 ```
 When you use the `PDO::FETCH_ASSOC` mode, the `PDOStatement` returns an associative of elements in which the key of each element is the column name of the result set.
 
@@ -371,7 +371,7 @@ $statement->bindParam(':post_id', $post_id, PDO::PARAM_INT);
 $statement->execute();
 $post = $statement->fetch(PDO::FETCH_ASSOC);
 
-var_dump($posts)
+var_dump($post);
 
 ```
 
