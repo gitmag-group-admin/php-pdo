@@ -504,10 +504,9 @@ $statement->execute([
     ':post_id' => 1
 ]);
 
-// fetch the next row
-while (($row = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
-    echo $row['title'] . "\n";
-}
+$row = $statement->fetch(PDO::FETCH_ASSOC);
+echo $row['title'] . "\n";
+
 ```
 
 ## fetchAll
