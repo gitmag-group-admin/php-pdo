@@ -476,8 +476,9 @@ $pdo = require 'connect.php';
 $sql = 'SELECT * FROM posts';
 $statement = $pdo->query($sql);
 
-$row = $statement->fetch(PDO::FETCH_ASSOC);
-echo $row['title'];
+while(($row = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
+	echo $row['title'] . "\n";
+}
 ```
 
 ### Using the fetch() method with a prepared statement
