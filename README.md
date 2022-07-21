@@ -453,7 +453,7 @@ The `$mode` parameter determines how the `fetch()` returns the next row. The $mo
 -   `PDO::FETCH_DEFAULT` – returns an array indexed by column number.
 -   `PDO::FETCH_ASSOC` – returns an array indexed by column name
 -   `PDO::FETCH_BOTH` – returns an array indexed by both column name and 0-indexed column number.
--   `PDO::FETCH_DEFAULT` – returns an instance from stdClass.
+-   `PDO::FETCH_OBJ` – returns an instance from stdClass.
 -   `PDO::FETCH_CLASS` – returns a new class instance by mapping the columns to the object’s properties.
 
 The `fetch()` method returns a value depending on the `$mode` parameter. It returns `false` on failure.
