@@ -436,8 +436,6 @@ The `fetch()` is a method of the `PDOStatement` class. The `fetch()` method allo
 
 Internally, the `fetch()` method fetches a single row from a result set and moves the internal pointer to the next row in the result set. Therefore, the subsequent call to the `fetch()` method will return the next row from the result set.
 
-To fetch all rows from a result set one by one, you typically use the `fetch()` method in a `while` loop.
-
 The following shows the syntax of the `fetch()` method:
 
 ```php
@@ -452,8 +450,10 @@ The `fetch()` method accepts three optional parameters. The most important one i
 
 The `$mode` parameter determines how the `fetch()` returns the next row. The $mode parameter accepts one of the `PDO::FETCH_*` constants. The most commonly used modes are:
 
+-   `PDO::FETCH_DEFAULT` – returns an array indexed by column number.
 -   `PDO::FETCH_BOTH` – returns an array indexed by both column name and 0-indexed column number.
 -   `PDO::FETCH_ASSOC` – returns an array indexed by column name
+-   `PDO::FETCH_DEFAULT` – returns an instance from stdClass.
 -   `PDO::FETCH_CLASS` – returns a new class instance by mapping the columns to the object’s properties.
 
 The `fetch()` method returns a value depending on the `$mode` parameter. It returns `false` on failure.
@@ -477,7 +477,7 @@ $statement = $pdo->query($sql);
 
 // fetch the next row
 while (($row = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
-    echo $row['title'] . '<br>';
+    echo $row['title'] . "\n";
 }
 ```
 
@@ -507,7 +507,7 @@ $statement->execute([
 
 // fetch the next row
 while (($row = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
-    echo $row['title'] . PHP_EOL;
+    echo $row['title'] . "\n";
 }
 ```
 
