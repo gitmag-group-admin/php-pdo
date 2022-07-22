@@ -548,7 +548,7 @@ $sql = 'SELECT * FROM posts';
 $statement = $pdo->query($sql);
 
 // fetch all rows
-$users = $statement->fetchAll(PDO::FETCH_ASSOC);
+$posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 // display the publisher name
 foreach ($posts as $post) {
