@@ -552,7 +552,7 @@ $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 // display the publisher name
 foreach ($posts as $post) {
-    echo $post['title'] . '<br>';
+    echo $post['title'] . "\n";
 }
 ```
 
@@ -582,7 +582,7 @@ $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 // display the posts
 foreach ($posts as $post) {
-    echo $post['id'] . '.' . $publisher['title'] . '<br>';
+    echo $post['id'] . ' - ' . $post['title'] . "\n";
 }
 ```
 
