@@ -594,11 +594,11 @@ and a `User` class:
 
 ```php
 class User{
-    private $id;
-    private $name;
-    private $email;
-    private $passwrod;
-    private $date;
+    public $id;
+    public $name;
+    public $email;
+    public $passwrod;
+    public $date;
 }
 ```
 
