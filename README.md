@@ -654,7 +654,7 @@ var_dump($user);
 Sometimes, you want to get the value of a single column from the next row of a result set. In this case, you can use the `fetchColumn()` method of the PDOStatement object.
 
 ```php
-public PDOStatement::fetchColumn(int $column = 0): mixed
+public function fetchColumn(int $column = 0): mixed
 ```
 
 The `fetchColumn()` method accepts a column index that you want to retrieve.
