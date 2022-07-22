@@ -685,8 +685,8 @@ $statement->execute(
     ['user_id' => 1]
 );
 
-$user_name = $pdo->fetchColumn();
-echo $user_name;
+$name = $pdo->fetchColumn();
+echo $name;
 ```
 ## PDO FETCH_GROUP
 
