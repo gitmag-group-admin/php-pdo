@@ -680,7 +680,7 @@ $statement->execute(
     ['user_id' => 1]
 );
 
-$name = $pdo->fetchColumn();
+$name = $statement->fetchColumn();
 echo $name;
 ```
 ## PDO FETCH_GROUP
