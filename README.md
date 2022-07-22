@@ -521,11 +521,7 @@ The following shows the syntax of the `fetchAll()` method:
 public function fetchAll(int $mode = PDO::FETCH_DEFAULT): array
 ```
 
-The `$mode` parameter determines how the `fetchAll()` returns the next row. The `$mode` parameter accepts one of the `PDO::FETCH_*` constants. The most commonly used modes are:
-
--   `PDO::FETCH_BOTH` – returns an array indexed by both column name and 0-indexed column number. This is the default.
--   `PDO::FETCH_ASSOC` – returns an array indexed by column name
--   `PDO::FETCH_CLASS` – returns a new class instance by mapping the columns to the object’s properties.
+The `$mode` parameter determines how the `fetchAll()` returns the next row. The `$mode` parameter accepts one of the `PDO::FETCH_*` constants.
 
 The `fetchAll()` method returns an array that contains all rows of a result set.
 
