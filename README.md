@@ -385,7 +385,7 @@ To delete one or more rows from a table, you can use a prepared statement. Here 
 -   Finally, execute the `DELETE` statement by calling the `execute()` method of the prepared statement.
 
 #### Delete one row from a table
-The following example illustrates how to use a prepared statement to delete the publisher with id 7 from the `categories` table:
+The following example illustrates how to use a prepared statement to delete the post with id 7 from the `categories` table:
 
 ```php
 $category_id = 7;
@@ -410,7 +410,7 @@ if ($statement->execute()) {
 #### Delete multiple rows from a table
 Deleting multiple rows from the table is the same as the steps for deleting one row from a table.
 To find the number of rows deleted, you use the `rowCount()` method of the `PDOStatement` object.
-The following example shows how to delete publishers with an id greater than 2:
+The following example shows how to delete posts with an id greater than 2:
 
 ```php
 $category_id = 4;
@@ -488,7 +488,7 @@ When a query accepts one or more parameters, you can fetch the next row from the
 -   First, execute the prepared statement.
 -   Second, fetch the next row from the result set using the `fetch()` method.
 
-The following example shows how to `fetch()` to fetch a book from the books table with publisher id 1:
+The following example shows how to `fetch()` to fetch a book from the books table with post id 1:
 
 ```php
 // connect to the database to get the PDO instance
@@ -536,7 +536,7 @@ If a query doesn’t accept a parameter, you can fetch all rows from the result 
 -   First, execute the query by calling the `query()` method of the `PDO` object.
 -   Then, fetch all rows from the result set into an array using the `fetchAll()` method.
 
-The following example illustrates how to use the `fetchAll()` method to select all rows from the `publishers` table:
+The following example illustrates how to use the `fetchAll()` method to select all rows from the `posts` table:
 
 ```php
 // connect to the database to get the PDO instance
@@ -550,7 +550,7 @@ $statement = $pdo->query($sql);
 // fetch all rows
 $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-// display the publisher name
+// display the post name
 foreach ($posts as $post) {
     echo $post['title'] . "\n";
 }
@@ -563,7 +563,7 @@ If a query accepts one or more parameters, you can:
 -   First, execute a prepared statement.
 -   Second, fetch all rows from the result set into an array using the `fetchAll()` method.
 
-The following example shows how to use `fetchAll()` to fetch all publishers with the id greater than 2:
+The following example shows how to use `fetchAll()` to fetch all posts with the id greater than 2:
 
 ```php
 // connect to the database to get the PDO instance
@@ -620,7 +620,7 @@ The `fetchObject()` maps the columns of the row with the properties of the objec
 
 ### PHP fetchObject() method example
 
-The following example shows how to use the `fetchObject()` method to fetch a row from the `publishers` table and returns a `Publisher` object:
+The following example shows how to use the `fetchObject()` method to fetch a row from the `posts` table and returns a `post` object:
 
 ```php
 class User{
@@ -667,7 +667,7 @@ Because of this, you should not use the `fetchColumn()` to retrieve values from 
 
 ### A fetchColumn() method example
 
-The following example uses the `fetchColumn()` method to get the name of the publisher with id 1:
+The following example uses the `fetchColumn()` method to get the name of the post with id 1:
 
 ```php
 $pdo = require 'connect.php';
@@ -774,7 +774,7 @@ The `PDO::FETCH_KEY_PAIR` mode allows you to retrieve a two-column result in an 
 
 In practice, you’ll use the `PDO::FETCH_KEY_PAIR` to fetch data for constructing a `<select>` element with data that comes from the database.
 
-For example, you can create a `<select>` element with the values are publisher id and texts are publisher names:
+For example, you can create a `<select>` element with the values are post id and texts are post names:
 ```php
 $pdo = require 'connect.php';
 
@@ -789,7 +789,7 @@ $users = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publishers</title>
+    <title>Posts</title>
 </head>
 <body>
     <label for="user">Select a user</label>
