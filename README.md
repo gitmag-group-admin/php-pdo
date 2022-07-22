@@ -624,11 +624,11 @@ The following example shows how to use the `fetchObject()` method to fetch a row
 
 ```php
 class User{
-    private $id;
-    private $name;
-    private $email;
-    private $passwrod;
-    private $date;
+    public $id;
+    public $name;
+    public $email;
+    public $password;
+    public $date;
 }
 
 // connect to the database
