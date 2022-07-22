@@ -613,11 +613,6 @@ public function fetchObject(
 
 The `fetchObject()` is a method of the `PDOStatement` class. It fetches the next row from the result set associated with a `PDOStatement` object and returns an object of a class. If the `fetchObject()` method fails, it’ll return `false` instead.
 
-The `fetchObject()` method has two parameters:
-
--   `$class` specifies the class of the object to return. If you omit it, the `fetchObject()` method will return an instance of the `stdClass` class.
--   `constructorArgs` is an array that specifies the arguments passed to the constructor) of the `$class`.
-
 The `fetchObject()` maps the columns of the row with the properties of the object with the following rules:
 
 -   First, assign the column value to the property with the same name.
