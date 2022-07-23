@@ -731,8 +731,7 @@ The following example selects the posts and users from the `posts` and `users` t
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * From posts 
-			INNER JOIN users ON posts.user_id = users.id';
+$sql = 'SELECT * From posts INNER JOIN users ON posts.user_id = users.id';
 
 $statement = $pdo->query($sql);
 
