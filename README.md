@@ -718,6 +718,18 @@ The `PDO::FETCH_GROUP` mode will return the following output:
             'date' => '2022-07-12 16:41:17',
             'email' => 'mohammadreza@gmail.com'
         ]
+    ],
+    'hossein' => [
+        0 => [
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'hossein@yahoo.com'
+        ],
+    ],
+    'ahmad' => [
+        0 => [
+            'date' => '2022-07-12 16:41:17',
+            'email' => 'ahmad@gmial.com'
+        ],
     ]
 ]
 ```
