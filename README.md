@@ -724,8 +724,6 @@ The `PDO::FETCH_GROUP` mode will return the following output:
 
 The `PDO::FETCH_GROUP` is helpful in case you want to group rows by unique values of the first column in the result set. For example, you can use the `PDO::FETCH_GROUP` to select data for generating groupings of options within a select element.
 
-### The PDO::FETCH_GROUP example
-
 The following example selects the posts and users from the `posts` and `users` table. The `PDO::FETCH_GROUP` groups the posts by the user names:
 
 ```php
