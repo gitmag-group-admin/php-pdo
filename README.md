@@ -724,6 +724,18 @@ The `PDO::FETCH_GROUP` mode will return the following output:
 
 The `PDO::FETCH_GROUP` is helpful in case you want to group rows by unique values of the first column in the result set. For example, you can use the `PDO::FETCH_GROUP` to select data for generating groupings of options within a select element.
 
+```php
+$pdo = require 'connect.php';
+
+$sql = "select name, email from users";
+
+$statement = $pdo->query($sql);
+
+$users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
+var_dump($users);
+
+```
+
 The following example selects the posts and users from the `posts` and `users` table. The `PDO::FETCH_GROUP` groups the posts by the user names:
 
 ```php
@@ -731,12 +743,11 @@ The following example selects the posts and users from the `posts` and `users` t
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * From posts INNER JOIN users ON posts.user_id = users.id';
-
+$sql = 'SELECT users.name, users.id, posts.* From posts INNER JOIN users ON posts.user_id = users.id';
+//$sql = "select name, email from users";
 $statement = $pdo->query($sql);
 
 $users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -747,16 +758,20 @@ $users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
     <title>Books</title>
 </head>
 <body>
-    <label for="post">Select a post:</label>
-    <select name="post" id="post">
-        <?php foreach ($user as $usr => $post) : ?>
-        <optgroup label="<?= $user ?>">
-            <?php foreach ($posts as $post) : ?>
-            <option value="<?= $post['id'] ?>"><?= $post['title'] ?></option>
-            <?php endforeach ?>
-        </optgroup>
+    <ul>
+        <?php foreach ($users as $user => $posts) : ?>
+            <li><?= $user ?>
+                <?php if(count($posts)): ?>
+                    <ul>
+                        <?php foreach ($posts as $post) : ?>
+                            <li><?= $post['title'] ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif ?>
+            </li>
         <?php endforeach ?>
-    </select>
+    </ul>        
+        
 </body>
 </html>
 ```
