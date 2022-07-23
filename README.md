@@ -792,7 +792,7 @@ $users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
 
 ### Introduction to the PDO FETCH_KEY_PAIR mode
 
-Both `fetch()` and fetchAll() methods accept a very useful fetch mode called `PDO::FETCH_KEY_PAIR`.
+Both `fetch()` and `fetchAll()` methods accept a very useful fetch mode called `PDO::FETCH_KEY_PAIR`.
 
 The `PDO::FETCH_KEY_PAIR` mode allows you to retrieve a two-column result in an array where the first column is the key and the second column is the value.
 
@@ -840,8 +840,7 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * FROM posts
-        WHERE id = :post_id';
+$sql = 'SELECT * FROM posts WHERE id = :post_id';
 
 $statement = $pdo->prepare($sql);
 $statement->execute([':post_id' => 1]);
