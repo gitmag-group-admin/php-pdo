@@ -8,7 +8,7 @@
 - [fetchObject](#fetchobject)
 - [fetchColumn](#fetchcolumn)
 - [PDO FETCH_GROUP](#pdo-fetch_group)
-- [PDO FETCH_KEY_PAIR](#PDO%20FETCH_KEY_PAIR)
+- [PDO FETCH_KEY_PAIR](#pdo-fetch_key_pair)
 - [PDO FETCH_CLASS](#pdo-fetch_class)
 - [Transaction](#php-pdo-transaction)
 
