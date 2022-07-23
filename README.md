@@ -692,7 +692,7 @@ The `PDO::FETCH_GROUP` allows you to group rows from the result set into a neste
 For example, if you have a query like this:
 
 ```sql
-SELECT id, name, email, `date` FROM users;
+SELECT name, email, `date` FROM users
 ```
 
 The `PDO::FETCH_GROUP` mode will return the following output:
@@ -744,7 +744,7 @@ The following example selects the posts and users from the `posts` and `users` t
 $pdo = require 'connect.php';
 
 $sql = 'SELECT users.name, users.id, posts.* From posts INNER JOIN users ON posts.user_id = users.id';
-//$sql = "select name, email from users";
+
 $statement = $pdo->query($sql);
 
 $users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
