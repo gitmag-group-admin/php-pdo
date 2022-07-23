@@ -802,8 +802,7 @@ For example, you can create a `<select>` element with the values are post id and
 ```php
 $pdo = require 'connect.php';
 
-$sql = 'SELECT id, name 
-        FROM users';
+$sql = 'SELECT id, name FROM users';
 
 $statement = $pdo->query($sql);
 $users = $statement->fetchAll(PDO::FETCH_KEY_PAIR);
