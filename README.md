@@ -857,13 +857,19 @@ The following example shows how to use the `PDO::FETCH_CLASS` mode to select dat
 ```php
 class Post
 {
+    public $attrs = [];
+    public function __set($name, $value)
+    {
+        $this->attrs[$name] = $value;
+    }
 }
 
 $pdo = require 'connect.php';
 
 $sql = 'SELECT * FROM posts';
 
-$posts = $statement->query()->fetchAll(PDO::FETCH_CLASS, 'Post');
+$statement = $pdo->query($sql);
+$posts = $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
 
 var_dump($posts);
 ```
@@ -883,11 +889,6 @@ class Post
     private $status;
     private $category;
     private $user;
-
-    public function __set($name, $value)
-    {
-        // empty
-    }
 }
 
 $pdo = require 'connect.php';
