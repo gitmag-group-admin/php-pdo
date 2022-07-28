@@ -893,10 +893,10 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * From posts 
-			INNER JOIN users ON posts.user_id = users.id
-			INNER JOIN categories ON posts.category_id = categories.id
-			WHERE posts.id = :post_id';
+$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name as category From posts 
+    	INNER JOIN users ON posts.user_id = users.id
+    	INNER JOIN categories ON posts.category_id = categories.id
+    	WHERE posts.id = :post_id';
 
 $statement = $pdo->prepare($sql);
 $statement->execute([':post_id' => 1]);
@@ -927,10 +927,10 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * From posts 
-			INNER JOIN users ON posts.user_id = users.id
-			INNER JOIN categories ON posts.category_id = categories.id
-			WHERE posts.id = :post_id';
+$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name as category From posts 
+    	INNER JOIN users ON posts.user_id = users.id
+    	INNER JOIN categories ON posts.category_id = categories.id
+    	WHERE posts.id = :post_id';
 
 $statement = $pdo->prepare($sql);
 $statement->execute([':post_id' => 1]);
