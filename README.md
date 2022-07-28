@@ -916,12 +916,22 @@ To instruct PDO to call the constructor before assigning column values to object
 ```php
 class Post
 {
+    private $id;
+    private $title;
+    private $content;
+    private $image;
+    private $view;
+    private $status;
+    private $category;
+    private $user;
+
     public function __construct()
     {
         if ($this->view == 0) {
-            echo 'this post don`t have view';
+            echo "this post don`t have veiw\n";
+        } else {
+            echo "this post have {$this->view} views\n";
         }
-        echo "this post have $this->view views";
     }
 }
 
@@ -934,7 +944,7 @@ $sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, 
 
 $statement = $pdo->prepare($sql);
 $statement->execute([':post_id' => 1]);
-$statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Post');
+$statement->setFetchMode(PDO::FETCH_CLASS, 'Post');
 $post = $statement->fetch();
 
 var_dump($post);
