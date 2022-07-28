@@ -466,7 +466,7 @@ If a query doesn’t accept a parameter, you can fetch a row from the result set
 -   First, execute the query by calling the `query()` method of the `PDO` object.
 -   Then, fetch each row from the result set using the `fetch()` method and a while loop:
 
-The following example shows how to use the `fetch()` method to select each row from the books table:
+The following example shows how to use the `fetch()` method to select each row from the posts table:
 
 ```php
 // connect to the database to get the PDO instance
@@ -488,7 +488,7 @@ When a query accepts one or more parameters, you can fetch the next row from the
 -   First, execute the prepared statement.
 -   Second, fetch the next row from the result set using the `fetch()` method.
 
-The following example shows how to `fetch()` to fetch a book from the books table with post id 1:
+The following example shows how to `fetch()` to fetch a post from the posts table with post id 1:
 
 ```php
 // connect to the database to get the PDO instance
@@ -767,7 +767,7 @@ $users = $statement->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books</title>
+    <title>Posts</title>
 </head>
 <body>
     <ul>
@@ -861,7 +861,7 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT * FROM books';
+$sql = 'SELECT * FROM posts';
 
 $posts = $statement->query()->fetchAll(PDO::FETCH_CLASS, 'Post');
 
@@ -873,7 +873,7 @@ var_dump($posts);
 The following example illustrates how to select one row from the `posts` table and return a new instance of the `Post` class:
 
 ```php
-class Book
+class Post
 {
     private $id;
     private $title;
