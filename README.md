@@ -954,29 +954,29 @@ var_dump($post);
 
 ### Introduction to PHP PDO transaction
 
-To start a transaction in PDO, you use the `PDO::beginTransaction()` method:
+To start a transaction in PDO, you use the `beginTransaction()` method:
 
 ```php
 $pdo->beginTransaction();
 ```
 
-The `beginTransaction()` method turns off the autocommit mode. It means that the changes made to the database via the PDO object won’t take effect until you call the `PDO::commit()` method.
+The `beginTransaction()` method turns off the autocommit mode. It means that the changes made to the database via the PDO object won’t take effect until you call the `commit()` method.
 
-To commit a transaction, you call the `PDO::commit()` method:
+To commit a transaction, you call the `commit()` method:
 
 ```php
 $pdo->commit();
 ```
 
-If you want to roll back the transaction, you can call the `PDO::rollback()` method:
+If you want to roll back the transaction, you can call the `rollback()` method:
 
 ```php
 $pdo->rollback();
 ```
 
-The `PDO::rollback()` method rolls back all changes made to the database. Also, it returns the connection to the autocommit mode.
+The `Prollback()` method rolls back all changes made to the database. Also, it returns the connection to the autocommit mode.
 
-The `PDO::beginTransaction()` method throws an exception if the database doesn’t support transactions.
+The `beginTransaction()` method throws an exception if the database doesn’t support transactions.
 
 ```php
 $pdo = require 'connect.php';
