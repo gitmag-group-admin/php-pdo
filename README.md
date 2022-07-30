@@ -927,7 +927,7 @@ class Post
 
     public function __construct()
     {
-        if ($this->view == 0) {
+        if ($this->view == null) {
             echo "this post don`t have veiw\n";
         } else {
             echo "this post have {$this->view} views\n";
