@@ -893,7 +893,7 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name as category From posts 
+$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name AS category From posts 
     	INNER JOIN users ON posts.user_id = users.id
     	INNER JOIN categories ON posts.category_id = categories.id
     	WHERE posts.id = :post_id';
@@ -937,7 +937,7 @@ class Post
 
 $pdo = require 'connect.php';
 
-$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name as category From posts 
+$sql = 'SELECT posts.id, posts.title, posts.content, posts.status, posts.image, posts.date, posts.view, users.name AS user, categories.name AS category From posts 
     	INNER JOIN users ON posts.user_id = users.id
     	INNER JOIN categories ON posts.category_id = categories.id
     	WHERE posts.id = :post_id';
@@ -977,3 +977,29 @@ $pdo->rollback();
 The `PDO::rollback()` method rolls back all changes made to the database. Also, it returns the connection to the autocommit mode.
 
 The `PDO::beginTransaction()` method throws an exception if the database doesn’t support transactions.
+
+```php
+$pdo = require 'connect.php';
+$name = 'new category';
+
+try {
+    $pdo->beginTransaction();
+
+    $sql = 'INSERT INTO categories (name) VALUES (:name)';
+
+    $statement = $pdo->prepare($sql);
+
+    $statement->execute([
+        ':name' => $name
+    ]);
+    
+    $category_id = $pdo->lastInsertId();
+    echo 'The category id ' . $category_id. ' was inserted';
+    
+    throw new Exception();
+    $pdo->commit();
+
+} catch (Exception $e) {
+    $pdo->rollback();
+}
+```
