@@ -993,7 +993,6 @@ try {
         ':name' => $name
     ]);
     
-    $category_id = $pdo->lastInsertId();
     echo 'The category was inserted';
     
     throw new Exception();
