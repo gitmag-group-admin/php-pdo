@@ -994,7 +994,7 @@ try {
     ]);
     
     $category_id = $pdo->lastInsertId();
-    echo 'The category id ' . $category_id. ' was inserted';
+    echo 'The category was inserted';
     
     throw new Exception();
     $pdo->commit();
