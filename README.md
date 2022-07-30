@@ -992,13 +992,14 @@ try {
     $statement->execute([
         ':name' => $name
     ]);
-    
     echo 'The category was inserted';
     
     throw new Exception();
     $pdo->commit();
-
+    echo 'proccess completed';
+    
 } catch (Exception $e) {
     $pdo->rollback();
+    echo 'proccess rollbacked';
 }
 ```
