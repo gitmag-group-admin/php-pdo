@@ -992,7 +992,7 @@ try {
     $statement->execute([
         ':name' => $name
     ]);
-    echo 'The category was inserted';
+    echo "The category was inserted\n";
     
     throw new Exception();
     $pdo->commit();
